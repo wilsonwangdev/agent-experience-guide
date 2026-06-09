@@ -7,12 +7,15 @@ interface Props {
   description?: string;
   lang?: string;
   ogType?: 'website' | 'article';
+  dataMode?: string;
 }
+
 const {
   title,
   description = 'A practical, open-source handbook for making services agent-ready',
   lang = 'en',
   ogType = 'website',
+  dataMode,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -24,7 +27,7 @@ const altPath = lang === 'en'
   : `${siteOrigin}${currentPath.replace(/^\/zh/, '') || '/'}`;
 ---
 <!doctype html>
-<html lang={lang} data-mode={Astro.props.dataMode || 'human'}>
+<html lang={lang} data-mode={dataMode || 'human'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,6 +54,22 @@ const altPath = lang === 'en'
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
     <link rel="sitemap" href="/sitemap.xml" />
+
+    <!-- Flash suppression: apply theme before render -->
+    <script is:inline>
+      (function(){
+        var t = localStorage.getItem('ax-theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-theme', t);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        var m = localStorage.getItem('ax-mode');
+        if (m === 'agent') {
+          document.documentElement.setAttribute('data-mode', 'agent');
+        }
+      })();
+    </script>
   </head>
   <body>
     <a href="#main-content" class="skip-to-content">Skip to content</a>
@@ -59,10 +78,6 @@ const altPath = lang === 'en'
     <SpeedInsights />
     <script>
       // Theme toggle
-      const savedTheme = localStorage.getItem('ax-theme');
-      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement | null;
         if (!target) return;
@@ -75,10 +90,6 @@ const altPath = lang === 'en'
       });
 
       // Mode toggle
-      const saved = localStorage.getItem('ax-mode');
-      if (saved === 'agent') {
-        document.documentElement.setAttribute('data-mode', 'agent');
-      }
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement | null;
         if (!target) return;
