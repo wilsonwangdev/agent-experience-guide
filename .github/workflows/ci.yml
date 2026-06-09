@@ -1,0 +1,145 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm run lint
+
+      - name: Build site
+        run: pnpm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  self-compliance:
+    name: AX Self-Compliance
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Check required agent files exist
+        run: |
+          missing=0
+          for f in llms.txt robots.txt sitemap.xml AGENTS.md auth.md capabilities.json SUMMARY.md; do
+            if [ ! -f "$f" ]; then
+              echo "::error file=$f::Missing required file: $f"
+              missing=$((missing + 1))
+            else
+              echo "OK: $f"
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing required agent file(s) missing"
+            exit 1
+          fi
+
+      - name: Validate sitemap.xml is well-formed XML
+        run: |
+          python3 -c "
+          import xml.etree.ElementTree as ET
+          ET.parse('sitemap.xml')
+          print('sitemap.xml: valid XML')
+          "
+
+      - name: Validate capabilities.json is valid JSON
+        run: |
+          python3 -c "
+          import json
+          with open('capabilities.json') as f:
+            json.load(f)
+          print('capabilities.json: valid JSON')
+          "
+
+      - name: Check all sitemap URLs are buildable
+        run: |
+          python3 -c "
+          import xml.etree.ElementTree as ET
+          import os
+          tree = ET.parse('sitemap.xml')
+          ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [loc.text for loc in tree.findall('.//sm:loc', ns)]
+          base = 'https://ax.wilsonhandbook.online'
+          missing = []
+          for url in urls:
+            path = url.replace(base, '').rstrip('/')
+            if path == '':
+              candidates = ['dist/index.html']
+            else:
+              candidates = [f'dist{path}/index.html', f'dist{path}']
+            found = any(os.path.exists(c) for c in candidates)
+            if not found:
+              missing.append((url, candidates))
+          if missing:
+            for url, cs in missing:
+              print(f'MISSING: {url} -> tried {cs}')
+            raise SystemExit(f'{len(missing)} sitemap URLs have no build output')
+          print(f'All {len(urls)} sitemap URLs have build output')
+          "
+
+  e2e:
+    name: E2E Tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: pnpm run test:ci
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
