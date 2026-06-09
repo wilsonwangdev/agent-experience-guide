@@ -32,26 +32,26 @@ This guide walks through each stage in detail.
 
 ### Foundations
 
-1. [What is Agent Experience?](docs/00-what-is-ax.md) — Why AX matters, the UX → DX → AX evolution, and how to think about agents as a user persona.
+1. [What is Agent Experience?](https://ax.wilsonhandbook.online/docs/00-what-is-ax) — Why AX matters, the UX → DX → AX evolution, and how to think about agents as a user persona.
 
 ### The Six Stages
 
-2. [Discovery](docs/01-discovery.md) — Can agents find you? llms.txt, robots.txt, sitemap, AEO/GEO, structured data.
-3. [Identity](docs/02-identity.md) — Do agents understand what you do? Machine-readable descriptions, metadata, pricing, capabilities.
-4. [Auth & Access](docs/03-auth-and-access.md) — Can agents authenticate and act? OAuth, API keys, auth.md, scoped tokens, x402.
-5. [Integration](docs/04-integration.md) — Is the plumbing there? MCP, A2A, streaming, SDKs, function calling, webhooks.
-6. [Errors & Recovery](docs/05-errors-and-recovery.md) — Can agents self-heal? Typed errors, retry guidance, structured responses.
+2. [Discovery](https://ax.wilsonhandbook.online/docs/01-discovery) — Can agents find you? llms.txt, robots.txt, sitemap, AEO/GEO, structured data.
+3. [Identity](https://ax.wilsonhandbook.online/docs/02-identity) — Do agents understand what you do? Machine-readable descriptions, metadata, pricing, capabilities.
+4. [Auth & Access](https://ax.wilsonhandbook.online/docs/03-auth-and-access) — Can agents authenticate and act? OAuth, API keys, auth.md, scoped tokens, x402.
+5. [Integration](https://ax.wilsonhandbook.online/docs/04-integration) — Is the plumbing there? MCP, A2A, streaming, SDKs, function calling, webhooks.
+6. [Errors & Recovery](https://ax.wilsonhandbook.online/docs/05-errors-and-recovery) — Can agents self-heal? Typed errors, retry guidance, structured responses.
 
 ### Architecture & Practice
 
-7. [Agent-Native Architecture](docs/06-agent-native-architecture.md) — Shared action models, agent UI parity, governed execution, cloneable apps.
-8. [End-User Experience](docs/06b-end-user-experience.md) — Can humans interact through agents? Handoff flows, MCP Apps, activity transparency.
-9. [Anti-Patterns](docs/07-anti-patterns.md) — 25+ things that break agent experience on the web.
-10. [Agent Readiness Checklist](docs/08-checklist.md) — A practical checklist to evaluate and improve your agent experience score.
+7. [Agent-Native Architecture](https://ax.wilsonhandbook.online/docs/06-agent-native-architecture) — Shared action models, agent UI parity, governed execution, cloneable apps.
+8. [End-User Experience](https://ax.wilsonhandbook.online/docs/06b-end-user-experience) — Can humans interact through agents? Handoff flows, MCP Apps, activity transparency.
+9. [Anti-Patterns](https://ax.wilsonhandbook.online/docs/07-anti-patterns) — 25+ things that break agent experience on the web.
+10. [Agent Readiness Checklist](https://ax.wilsonhandbook.online/docs/08-checklist) — A practical checklist to evaluate and improve your agent experience score.
 
 ### Reference
 
-- [References](docs/references.md) — Curated links, standards, and further reading.
+- [References](https://ax.wilsonhandbook.online/docs/references) — Curated links, standards, and further reading.
 
 ## Quick Start: 3 Things You Can Do Today
 
@@ -72,9 +72,15 @@ Level 5 — Agent-Native    Agents and humans share the same action model, state
 
 Most of the web sits at Level 0 or 1 today. This guide helps you move up.
 
+## Live Site
+
+Read the guide at **[ax.wilsonhandbook.online](https://ax.wilsonhandbook.online)**
+
+Switch between **Human** and **Agent** mode using the toggle in the top-right corner.
+
 ## Contributing
 
-This is an open project. PRs, issues, and discussions are welcome. The goal is to build the most comprehensive, actionable guide for agent experience — together.
+This is an open project. PRs, issues, and discussions are welcome at [GitHub Issues](https://github.com/wilsonwangdev/agent-experience-guide/issues).
 
 ## License
 

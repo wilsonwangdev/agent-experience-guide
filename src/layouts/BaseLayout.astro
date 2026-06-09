@@ -24,7 +24,7 @@ const altPath = lang === 'en'
   : `${siteOrigin}${currentPath.replace(/^\/zh/, '') || '/'}`;
 ---
 <!doctype html>
-<html lang={lang} data-mode="human">
+<html lang={lang} data-mode={Astro.props.dataMode || 'human'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -58,6 +58,23 @@ const altPath = lang === 'en'
     <Analytics />
     <SpeedInsights />
     <script>
+      // Theme toggle
+      const savedTheme = localStorage.getItem('ax-theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        if (!target) return;
+        const btn = target.closest('[data-theme-toggle]');
+        if (!btn) return;
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('ax-theme', next);
+      });
+
+      // Mode toggle
       const saved = localStorage.getItem('ax-mode');
       if (saved === 'agent') {
         document.documentElement.setAttribute('data-mode', 'agent');

@@ -214,26 +214,36 @@ test.describe('Navigation — sidebar clicks', () => {
 });
 
 test.describe('Navigation — footer links', () => {
-  test('all footer links on EN landing return 200', async ({ page }) => {
+  test('all internal footer links on EN landing return 200', async ({ page }) => {
     await page.goto('/');
     const links = page.locator('.site-footer nav a');
     const count = await links.count();
     for (let i = 0; i < count; i++) {
       const href = await links.nth(i).getAttribute('href');
+      if (href!.startsWith('http')) continue;
       const res = await page.request.get(href!);
       expect(res.status()).toBe(200);
     }
   });
 
-  test('all footer links on ZH landing return 200', async ({ page }) => {
+  test('all internal footer links on ZH landing return 200', async ({ page }) => {
     await page.goto('/zh');
     const links = page.locator('.site-footer nav a');
     const count = await links.count();
     for (let i = 0; i < count; i++) {
       const href = await links.nth(i).getAttribute('href');
+      if (href!.startsWith('http')) continue;
       const res = await page.request.get(href!);
       expect(res.status()).toBe(200);
     }
+  });
+
+  test('external footer links (GitHub) point to valid URLs', async ({ page }) => {
+    await page.goto('/');
+    const issuesLink = page.locator('.site-footer nav a', { hasText: 'Issues' });
+    await expect(issuesLink).toBeVisible();
+    const href = await issuesLink.getAttribute('href');
+    expect(href).toContain('github.com/wilsonwangdev/agent-experience-guide');
   });
 });
 
