@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  prev?: string;
+  next?: string;
+  lang: 'en' | 'zh';
+}
+
+const { prev, next, lang } = Astro.props;
+
+const docs = await getCollection('docs', (entry) => {
+  return lang === 'en' ? entry.id.startsWith('en/') : entry.id.startsWith('zh/');
+});
+
+const prefix = lang === 'zh' ? '/zh/docs/' : '/docs/';
+const titleMap = new Map<string, string>();
+for (const doc of docs) {
+  const slug = doc.id.replace(/^(en|zh)\//, '').replace(/\.md$/, '');
+  const t = lang === 'zh' ? (doc.data.zh_title || doc.data.title) : doc.data.title;
+  titleMap.set(slug, t);
+}
+
+const prevTitle = prev ? (titleMap.get(prev) || prev) : '';
+const nextTitle = next ? (titleMap.get(next) || next) : '';
+const prevLabel = lang === 'zh' ? '← 上一篇' : '← Previous';
+const nextLabel = lang === 'zh' ? '下一篇 →' : 'Next →';
+---
+
+{(prev || next) && (
+<div class="chapter-nav">
+  <div class="chapter-nav-inner">
+    {prev ? (
+      <a href={`${prefix}${prev}`} class="chapter-nav-link chapter-nav-prev">
+        <span class="chapter-nav-label">{prevLabel}</span>
+        <span class="chapter-nav-title">{prevTitle}</span>
+      </a>
+    ) : <span></span>}
+    {next ? (
+      <a href={`${prefix}${next}`} class="chapter-nav-link chapter-nav-next">
+        <span class="chapter-nav-label">{nextLabel}</span>
+        <span class="chapter-nav-title">{nextTitle}</span>
+      </a>
+    ) : <span></span>}
+  </div>
+</div>
+)}

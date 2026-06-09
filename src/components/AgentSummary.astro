@@ -38,7 +38,6 @@ const maturityLabel = typeof frontmatter.stage === 'number'
   ? maturityMap[frontmatter.stage] ?? ''
   : '';
 
-const stageNum = typeof frontmatter.stage === 'number' ? frontmatter.stage : -1;
 const hasTakeaways = frontmatter.key_takeaways && frontmatter.key_takeaways.length > 0;
 const hasSummary = frontmatter.summary && frontmatter.summary.length > 0;
 const hasConcepts = frontmatter.key_concepts && frontmatter.key_concepts.length > 0;
@@ -80,7 +79,7 @@ const hasNav = frontmatter.prev || frontmatter.next;
       <div class="agent-section">
         <span class="agent-label">{isZh ? '关键要点' : 'Key Takeaways'}</span>
         <ol class="agent-takeaways">
-          {frontmatter.key_takeaways!.map((t, i) => (
+          {frontmatter.key_takeaways!.map((t) => (
             <li>{t}</li>
           ))}
         </ol>
