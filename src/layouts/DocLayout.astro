@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import Sidebar from '../components/Sidebar.astro';
 import AgentSummary from '../components/AgentSummary.astro';
+import ChapterNav from '../components/ChapterNav.astro';
 import ModeToggle from '../components/ModeToggle.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import LangSwitcher from '../components/LangSwitcher.astro';
@@ -21,12 +22,16 @@ const { title, description, lang, currentSlug, frontmatter, headings = [] } = As
 const navGuide = lang === 'zh' ? '指南' : 'Guide';
 const navChecklist = lang === 'zh' ? '检查清单' : 'Checklist';
 const navRefs = lang === 'zh' ? '参考资料' : 'References';
+const menuLabel = lang === 'zh' ? '菜单' : 'Menu';
 const prefix = lang === 'zh' ? '/zh' : '';
 ---
 
 <BaseLayout title={title} description={description} lang={lang} ogType="article">
   <header class="top-nav">
     <div class="nav-left">
+      <button class="menu-toggle" aria-label={menuLabel} data-menu-toggle>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
       <a href={prefix || '/'} class="logo">AX Guide</a>
       <nav class="main-nav">
         <a href={`${prefix}/docs/00-what-is-ax`}>{navGuide}</a>
@@ -45,9 +50,7 @@ const prefix = lang === 'zh' ? '/zh' : '';
   </header>
 
   <div class="doc-layout">
-    <div class="human-only">
-      <Sidebar currentSlug={currentSlug} lang={lang} />
-    </div>
+    <Sidebar currentSlug={currentSlug} lang={lang} />
     <main class="doc-main" id="main-content">
       {frontmatter && (
         <AgentSummary frontmatter={frontmatter} headings={headings} />
@@ -55,6 +58,9 @@ const prefix = lang === 'zh' ? '/zh' : '';
       <article class="prose">
         <slot />
       </article>
+      {frontmatter && (
+        <ChapterNav prev={frontmatter.prev} next={frontmatter.next} lang={lang} />
+      )}
     </main>
   </div>
 
@@ -70,4 +76,49 @@ const prefix = lang === 'zh' ? '/zh' : '';
       </nav>
     </div>
   </footer>
+
+  <script define:vars={{ lang }}>
+    // Mobile menu toggle
+    document.addEventListener('click', (e) => {
+      const target = e.target instanceof Element ? e.target : null;
+      if (!target) return;
+      const btn = target.closest('[data-menu-toggle]');
+      if (!btn) return;
+      const sidebar = document.querySelector('.sidebar');
+      if (!sidebar) return;
+      const isOpen = sidebar.classList.toggle('mobile-open');
+      if (isOpen) {
+        sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    // Copy button for code blocks
+    const i18n = { copy: lang === 'zh' ? '复制' : 'Copy', copied: lang === 'zh' ? '已复制' : 'Copied!', failed: lang === 'zh' ? '失败' : 'Failed' };
+    document.querySelectorAll('.prose pre').forEach((pre) => {
+      const code = pre.querySelector('code');
+      if (!code) return;
+      // Wrap pre in a relative container so copy button stays outside scroll area
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode && pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+      // Create copy button inside wrapper
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = i18n.copy;
+      btn.setAttribute('aria-label', i18n.copy);
+      wrapper.appendChild(btn);
+      btn.addEventListener('click', () => {
+        const text = code.textContent || '';
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = i18n.copied;
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = i18n.copy; btn.classList.remove('copied'); }, 2000);
+        }).catch(() => {
+          btn.textContent = i18n.failed;
+          setTimeout(() => { btn.textContent = i18n.copy; }, 2000);
+        });
+      });
+    });
+  </script>
 </BaseLayout>
