@@ -1,0 +1,134 @@
+---
+interface Props {
+  frontmatter: {
+    stage?: number | string;
+    title?: string;
+    key_concepts?: string[];
+    practical_steps?: number;
+    anti_patterns?: number;
+    summary?: string;
+    key_takeaways?: string[];
+    zh_title?: string;
+    lang?: string;
+    prev?: string;
+    next?: string;
+  };
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { frontmatter } = Astro.props;
+const headings = Astro.props.headings || [];
+const lang = frontmatter.lang || 'en';
+const isZh = lang === 'zh';
+
+const stageLabel = typeof frontmatter.stage === 'number'
+  ? `Stage ${frontmatter.stage}`
+  : frontmatter.stage || '—';
+
+const maturityMap: Record<number, string> = {
+  0: 'L0 Invisible',
+  1: 'L1 Discoverable',
+  2: 'L2 Accessible',
+  3: 'L3 Integrated',
+  4: 'L4 Agent-Ready',
+  5: 'L5 Agent-Native',
+};
+
+const maturityLabel = typeof frontmatter.stage === 'number'
+  ? maturityMap[frontmatter.stage] ?? ''
+  : '';
+
+const stageNum = typeof frontmatter.stage === 'number' ? frontmatter.stage : -1;
+const hasTakeaways = frontmatter.key_takeaways && frontmatter.key_takeaways.length > 0;
+const hasSummary = frontmatter.summary && frontmatter.summary.length > 0;
+const hasConcepts = frontmatter.key_concepts && frontmatter.key_concepts.length > 0;
+const hasHeadings = headings.length > 0;
+const hasNav = frontmatter.prev || frontmatter.next;
+---
+
+<div class="agent-summary agent-only">
+  <div class="agent-card">
+    <div class="agent-card-header">
+      <div class="agent-meta-row">
+        <span class="agent-stage">{stageLabel}</span>
+        {maturityLabel && <span class="agent-maturity">{maturityLabel}</span>}
+        <span class="agent-lang">{lang.toUpperCase()}</span>
+      </div>
+      <h2 class="agent-title">{frontmatter.title}</h2>
+      {frontmatter.zh_title && lang === 'en' && (
+        <p class="agent-zh-title">{frontmatter.zh_title}</p>
+      )}
+    </div>
+
+    {hasSummary && (
+      <div class="agent-section">
+        <span class="agent-label">{isZh ? '摘要' : 'Summary'}</span>
+        <p class="agent-summary-text">{frontmatter.summary}</p>
+      </div>
+    )}
+
+    {hasConcepts && (
+      <div class="agent-section">
+        <span class="agent-label">{isZh ? '核心概念' : 'Key Concepts'}</span>
+        <div class="agent-tags">
+          {frontmatter.key_concepts!.map(c => <span class="agent-tag">{c}</span>)}
+        </div>
+      </div>
+    )}
+
+    {hasTakeaways && (
+      <div class="agent-section">
+        <span class="agent-label">{isZh ? '关键要点' : 'Key Takeaways'}</span>
+        <ol class="agent-takeaways">
+          {frontmatter.key_takeaways!.map((t, i) => (
+            <li>{t}</li>
+          ))}
+        </ol>
+      </div>
+    )}
+
+    <div class="agent-stats-row">
+      {(frontmatter.practical_steps ?? 0) > 0 && (
+        <div class="agent-stat">
+          <span class="agent-stat-num">{frontmatter.practical_steps ?? 0}</span>
+          <span class="agent-stat-label">{isZh ? '实操步骤' : 'practical steps'}</span>
+        </div>
+      )}
+      {(frontmatter.anti_patterns ?? 0) > 0 && (
+        <div class="agent-stat">
+          <span class="agent-stat-num">{frontmatter.anti_patterns ?? 0}</span>
+          <span class="agent-stat-label">{isZh ? '反模式' : 'anti-patterns'}</span>
+        </div>
+      )}
+      {hasHeadings && (
+        <div class="agent-stat">
+          <span class="agent-stat-num">{headings.length}</span>
+          <span class="agent-stat-label">{isZh ? '章节' : 'sections'}</span>
+        </div>
+      )}
+    </div>
+
+    {hasHeadings && (
+      <div class="agent-section">
+        <span class="agent-label">{isZh ? '章节结构' : 'Sections'}</span>
+        <ul class="agent-headings">
+          {headings.map(h => (
+            <li style={`padding-left: ${(h.depth - 1) * 0.75}rem`}>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {hasNav && (
+      <div class="agent-section agent-nav">
+        <span class="agent-label">{isZh ? '导航' : 'Navigation'}</span>
+        <div class="agent-nav-links">
+          {frontmatter.prev && <span>← {frontmatter.prev}</span>}
+          {frontmatter.next && <span>{frontmatter.next} →</span>}
+        </div>
+      </div>
+    )}
+  </div>
+</div>

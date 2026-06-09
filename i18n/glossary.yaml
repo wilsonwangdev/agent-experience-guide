@@ -1,0 +1,68 @@
+# 术语表 / Glossary
+
+本项目的中英文术语对照表。翻译时以此为准，确保全文一致性。
+
+## 核心术语
+
+| 英文 | 中文 | 缩写 | 说明 |
+|------|------|------|------|
+| Agent | 智能体 | — | 不译为"代理"。"代理"用于 proxy/context 场景 |
+| Agent Experience | 智能体体验 | AX | 不译为"代理体验" |
+| Agent-Native | 智能体原生 | — | 软件架构以智能体为第一等用户 |
+| Agent-Ready | 智能体就绪 | — | 服务可被智能体发现、理解、认证和使用 |
+| Discovery | 可发现性 | — | Stage 1：智能体能否找到你的服务？ |
+| Identity | 身份标识 | — | Stage 2：智能体能否理解你的服务？ |
+| Auth & Access | 认证与访问 | — | Stage 3：智能体能否认证并执行操作？ |
+| Integration | 集成 | — | Stage 4：管道是否就绪？ |
+| Errors & Recovery | 错误与恢复 | — | Stage 5：智能体能否自愈？ |
+| End-User Experience | 终端用户体验 | — | Stage 6：人类能否通过智能体交互？ |
+| Maturity Model | 成熟度模型 | — | Level 0-5 的进阶评估 |
+
+## 协议与标准
+
+| 英文 | 中文 | 缩写 | 说明 |
+|------|------|------|------|
+| Model Context Protocol | 模型上下文协议 | MCP | 智能体与工具交互的开放协议 |
+| Agent-to-Agent | 智能体对智能体协议 | A2A | 智能体间通信协议 |
+| Agent Card | 智能体名片 | — | A2A 协议中的自我描述文档 |
+| llms.txt | llms.txt | — | 不翻译文件名 |
+| auth.md | auth.md | — | 不翻译文件名 |
+| AGENTS.md | AGENTS.md | — | 不翻译文件名 |
+| OpenAPI | OpenAPI | — | 保留英文 |
+| JSON-LD | JSON-LD | — | 保留英文 |
+
+## 技术术语
+
+| 英文 | 中文 | 说明 |
+|------|------|------|
+| Scoped Token | 作用域令牌 | 有权限范围的访问令牌 |
+| Progressive Scoping | 渐进式授权 | 从最小权限开始逐步升级 |
+| Idempotency Key | 幂等键 | 防止重复请求的标识符 |
+| Streamable HTTP | 可流式 HTTP | MCP 的现代传输方式 |
+| Handoff Flow | 交接流程 | 智能体将控制权交还给人类 |
+| Capability Index | 能力索引 | 服务暴露给智能体的动作列表 |
+| Anti-Pattern | 反模式 | 常见的错误设计模式 |
+| Typed Error | 类型化错误 | 带有结构化类型和代码的错误 |
+| Retry-After | 重试等待 | 错误响应中告知何时重试的机制 |
+
+## 不翻译的术语
+
+以下术语在中文文本中保留英文原文，首次出现时用括号附注中文：
+
+- Token（令牌）
+- Endpoint（端点）
+- SDK（软件开发工具包）
+- API（应用程序接口）
+- OAuth（开放授权）
+- PKCE（证明密钥代码交换）
+- Webhook（网络钩子）
+- Schema（模式/架构）
+
+## 翻译原则
+
+1. **Agent 统一译为"智能体"**，不译为"代理"、"代理体"、"行为体"
+2. **Agentic 统一译为"智能体化的"**，如 Agentic AI = 智能体化 AI
+3. 专有名词和文件名（llms.txt, auth.md, MCP, A2A）保留英文
+4. 首次出现时采用"中文（英文）"格式，如"模型上下文协议（MCP）"
+5. 技术术语的注释仅在首次出现，后续直接使用中文
+6. 代码示例中的注释翻译为中文

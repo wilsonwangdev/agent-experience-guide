@@ -1,0 +1,67 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import AgentSummary from '../components/AgentSummary.astro';
+import ModeToggle from '../components/ModeToggle.astro';
+import LangSwitcher from '../components/LangSwitcher.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang: 'en' | 'zh';
+  currentSlug: string;
+  frontmatter?: CollectionEntry<'docs'>['data'];
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { title, description, lang, currentSlug, frontmatter, headings = [] } = Astro.props;
+const navGuide = lang === 'zh' ? '指南' : 'Guide';
+const navChecklist = lang === 'zh' ? '检查清单' : 'Checklist';
+const navRefs = lang === 'zh' ? '参考资料' : 'References';
+const prefix = lang === 'zh' ? '/zh' : '';
+---
+
+<BaseLayout title={title} description={description} lang={lang} ogType="article">
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href={prefix || '/'} class="logo">AX Guide</a>
+      <nav class="main-nav">
+        <a href={`${prefix}/docs/00-what-is-ax`}>{navGuide}</a>
+        <a href={`${prefix}/docs/08-checklist`}>{navChecklist}</a>
+        <a href={`${prefix}/docs/references`}>{navRefs}</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <LangSwitcher />
+      <ModeToggle />
+    </div>
+  </header>
+
+  <div class="doc-layout">
+    <div class="human-only">
+      <Sidebar currentSlug={currentSlug} lang={lang} />
+    </div>
+    <main class="doc-main" id="main-content">
+      {frontmatter && (
+        <AgentSummary frontmatter={frontmatter} headings={headings} />
+      )}
+      <article class="prose">
+        <slot />
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Agent Experience Guide — MIT License</span>
+      <nav>
+        <a href="/llms.txt">llms.txt</a>
+        <a href="/AGENTS.md">AGENTS.md</a>
+        <a href="/auth.md">auth.md</a>
+        <a href="/capabilities.json">capabilities.json</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>

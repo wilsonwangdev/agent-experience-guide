@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocLayout from '../../../layouts/DocLayout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs', (entry) => entry.id.startsWith('zh/'));
+  return docs.map((doc) => ({
+    params: { slug: doc.id.replace(/^zh\//, '').replace(/\.md$/, '') },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+
+const title = doc.data.zh_title || doc.data.title;
+const slug = doc.id.replace(/^zh\//, '').replace(/\.md$/, '');
+const headings = doc.data.key_concepts?.map((c: string) => ({
+  depth: 2,
+  slug: c.toLowerCase().replace(/\s+/g, '-'),
+  text: c,
+})) || [];
+---
+
+<DocLayout
+  title={title}
+  lang="zh"
+  currentSlug={slug}
+  frontmatter={{ ...doc.data, lang: 'zh' }}
+  headings={headings}
+>
+  <Content />
+</DocLayout>

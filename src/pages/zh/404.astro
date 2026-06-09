@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="404 — 未找到" lang="zh">
+  <main class="landing" style="text-align: center; padding-top: 6rem;">
+    <h1>页面未找到</h1>
+    <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+      您访问的页面不存在。
+    </p>
+    <nav style="display: flex; gap: 1.5rem; justify-content: center; font-size: 1rem;">
+      <a href="/zh">首页</a>
+      <a href="/zh/docs/00-what-is-ax">指南</a>
+      <a href="/zh/docs/08-checklist">检查清单</a>
+    </nav>
+  </main>
+</BaseLayout>

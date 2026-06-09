@@ -1,0 +1,86 @@
+# Agent Experience Guide
+
+> A practical guide for making your service, application, or tool great for AI agents.
+
+## Category
+
+Developer Reference / Documentation / Open Standard
+
+## What This Is
+
+A comprehensive, open-source reference for Agent Experience (AX) — the discipline of designing services that AI agents can discover, understand, authenticate with, integrate into, and use effectively.
+
+Covers the full agent journey from discovery to agent-native architecture, with concrete examples, code patterns, anti-patterns, and a readiness checklist.
+
+## Who It's For
+
+- Developers building APIs and services that agents will use
+- Product managers designing products for the agent era
+- Engineers implementing MCP servers, A2A agents, or agent-ready protocols
+- Teams evaluating their agent readiness score
+
+## How to Read This Guide
+
+- **Agent summary:** Read `SUMMARY.md` for a dense, compact version of all content — key patterns, anti-patterns, and scoring in one page.
+- **Machine-parseable:** Read `capabilities.json` for a structured capability index with stage metadata and parameter schemas.
+- **Chapter metadata:** Each chapter file has YAML frontmatter with `stage`, `key_concepts`, `zh_title`, and navigation links — agents can parse this without reading full prose.
+- **Full narrative:** Read individual chapters in `docs/` for detailed explanations and code examples.
+
+## Agent Capabilities
+
+Agents visiting this repository can:
+
+- **Read** any chapter in full (all markdown, no JavaScript required)
+- **Navigate** between chapters using "What's Next" links at the bottom of each chapter
+- **Search** the checklist in `08-checklist.md` for specific readiness criteria
+- **Look up** references and standards in `references.md`
+- **Evaluate** a service against the six-stage readiness model
+
+Agents should NOT attempt to authenticate (no auth), look for an API or MCP server (none exists), or expect real-time data (static content).
+
+## Chapters
+
+1. **[What is AX?](docs/00-what-is-ax.md)** — The UX → DX → AX evolution, why it matters now, the six stages of agent readiness
+2. **[Discovery](docs/01-discovery.md)** — Can agents find you? llms.txt, robots.txt, sitemap, AEO/GEO, structured data
+3. **[Identity](docs/02-identity.md)** — Do agents understand what you do? Machine-readable descriptions, metadata, pricing, capabilities
+4. **[Auth & Access](docs/03-auth-and-access.md)** — Can agents authenticate and act? OAuth, API keys, auth.md, scoped tokens, x402
+5. **[Integration](docs/04-integration.md)** — Is the plumbing there? MCP, A2A, streaming, SDKs, function calling, webhooks
+6. **[Errors & Recovery](docs/05-errors-and-recovery.md)** — Can agents self-heal? Typed errors, retry guidance, structured responses
+7. **[Agent-Native Architecture](docs/06-agent-native-architecture.md)** — Shared action models, agent UI parity, governed execution, AGENTS.md
+8. **[End-User Experience](docs/06b-end-user-experience.md)** — Can humans interact through agents? Handoff flows, MCP Apps, activity transparency
+9. **[Anti-Patterns](docs/07-anti-patterns.md)** — 25 things that break agent experience on the web
+10. **[Checklist](docs/08-checklist.md)** — Practical readiness assessment with scoring
+
+## What This Guide Does NOT Cover
+
+- This is NOT a ranking or scoring service (that's [ora.ai](https://ora.ai/))
+- This is NOT a formal specification (that's [axd.md](https://axd.md/))
+- This is NOT a news aggregator (that's [agentexperience.ax](https://agentexperience.ax/))
+- This is NOT a product with an API, auth system, or database
+- This is NOT an MCP server or agent protocol implementation
+- This does NOT score individual websites or services
+
+## Key Concepts
+
+- **AX (Agent Experience)** — The discipline of designing for AI agents as a user persona
+- **Six-Stage Model** — Discovery → Identity → Auth & Access → Integration → Errors & Recovery → End-User Experience
+- **AX Maturity Model** — Level 0 (Invisible) → Level 1 (Discoverable) → Level 2 (Accessible) → Level 3 (Integrated) → Level 4 (Agent-Ready) → Level 5 (Agent-Native)
+- **MCP (Model Context Protocol)** — Standard for connecting agents to tools and data sources
+- **A2A (Agent-to-Agent)** — Protocol for agents to communicate with each other
+- **llms.txt** — A markdown file at your site root that tells agents what your product does
+- **auth.md** — A protocol for agent authentication on behalf of users
+- **Agent Readiness** — How well an agent can find, understand, authenticate, and use your service
+
+## Quick Links
+
+- AX Design Standard: https://axd.md/
+- ora.ai Agent Readiness Scoring: https://ora.ai/
+- Agent Experience Community: https://agentexperience.ax/
+- MCP Specification: https://modelcontextprotocol.io/
+- A2A Protocol: https://github.com/google/A2A
+- auth.md Specification: https://workos.com/auth-md
+- AgentReady Standard: https://agentready.org/
+
+## License
+
+MIT

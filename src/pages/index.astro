@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LangSwitcher from '../components/LangSwitcher.astro';
+import ModeToggle from '../components/ModeToggle.astro';
+import '../styles/global.css';
+---
+
+<BaseLayout title="Agent Experience Guide" description="A practical, open-source handbook for making services agent-ready." lang="en">
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="/" class="logo">AX Guide</a>
+      <nav class="main-nav">
+        <a href="/docs/00-what-is-ax">Guide</a>
+        <a href="/docs/08-checklist">Checklist</a>
+        <a href="/docs/references">References</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <LangSwitcher />
+      <ModeToggle />
+    </div>
+  </header>
+
+  <main class="landing" id="main-content">
+    <div class="lang-bar">
+      <strong>English</strong> | <a href="/zh">中文</a>
+    </div>
+    <h1>Agent Experience Guide</h1>
+    <p class="tagline">How to make your service, application, or tool great for AI agents.</p>
+
+    <div class="agent-only agent-summary" style="margin: 2rem 0;">
+      <div class="agent-card">
+        <div class="agent-meta"><span class="agent-stage">AX</span></div>
+        <h2 class="agent-title" style="font-size:1.3rem;margin-bottom:1rem;">Agent Experience Guide</h2>
+        <div class="agent-field">
+          <span class="agent-label">Key Concepts</span>
+          <div class="agent-tags">
+            <span class="agent-tag">Discovery</span><span class="agent-tag">Identity</span><span class="agent-tag">Auth</span><span class="agent-tag">Integration</span><span class="agent-tag">Errors</span><span class="agent-tag">Architecture</span>
+          </div>
+        </div>
+        <div class="agent-field">
+          <span class="agent-label">Actions</span>
+          <div class="agent-nav-links" style="flex-direction:column;gap:4px;">
+            <span>→ /docs/00-what-is-ax — Introduction</span>
+            <span>→ /docs/08-checklist — Readiness Checklist</span>
+            <span>→ /SUMMARY.md — Dense Reference</span>
+            <span>→ /capabilities.json — Machine-parseable Index</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="human-only">
+      <p>The web was built for humans. Every button, form, and navigation menu assumes a person with eyes and hands. But the fastest-growing user base isn't human — it's AI agents. <strong>Every website already has an agent experience. The question is whether it's good or bad.</strong></p>
+
+      <p>Just as UX taught us to design for users, and DX taught us to design for developers, <strong>AX (Agent Experience)</strong> is the discipline of designing for AI agents — software that browses sites, calls APIs, reads docs, and completes tasks on behalf of people. This guide is a practical, open-source handbook on how to do it well.</p>
+
+      <h2>Why This Guide Exists</h2>
+      <ul>
+        <li><strong>ora.ai</strong> tells you <em>where you stand</em> — it scores and ranks agent readiness across thousands of sites.</li>
+        <li><strong>axd.md</strong> tells you <em>what to aim for</em> — it defines 12 principles and 15 primitives of agent experience design.</li>
+        <li><strong>agentexperience.ax</strong> curates <em>conversations and articles</em> about the AX movement.</li>
+      </ul>
+      <p><strong>This guide</strong> tells you <em>how to get there</em> — concrete, actionable steps with code examples, patterns, and anti-patterns.</p>
+
+      <h2>The Six Stages</h2>
+      <ol>
+        <li><a href="/docs/01-discovery">Discovery</a> — Can agents find you?</li>
+        <li><a href="/docs/02-identity">Identity</a> — Do agents understand what you do?</li>
+        <li><a href="/docs/03-auth-and-access">Auth &amp; Access</a> — Can agents authenticate and act?</li>
+        <li><a href="/docs/04-integration">Integration</a> — Is the plumbing there?</li>
+        <li><a href="/docs/05-errors-and-recovery">Errors &amp; Recovery</a> — Can agents self-heal?</li>
+        <li><a href="/docs/06b-end-user-experience">End-User Experience</a> — Can humans interact through agents?</li>
+      </ol>
+
+      <h2>Quick Start</h2>
+      <ol>
+        <li><strong>Add <code>/llms.txt</code></strong> to your site root describing what your site does.</li>
+        <li><strong>Return typed errors</strong> with retry guidance from every API endpoint.</li>
+        <li><strong>Let agents authenticate</strong> with scoped API tokens instead of browser-only OAuth.</li>
+      </ol>
+
+      <p style="margin-top:2rem;"><a href="/docs/00-what-is-ax">→ Start reading</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Agent Experience Guide — MIT License</span>
+      <nav>
+        <a href="/llms.txt">llms.txt</a>
+        <a href="/AGENTS.md">AGENTS.md</a>
+        <a href="/auth.md">auth.md</a>
+        <a href="/capabilities.json">capabilities.json</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>

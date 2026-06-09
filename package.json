@@ -1,0 +1,24 @@
+{
+  "name": "agent-experience-guide",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "astro check",
+    "test": "playwright test",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
+    "astro": "^6.4.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "name": "Agent Experience Guide",
+  "description": "A practical, open-source handbook for making services, applications, and tools agent-ready.",
+  "url": "https://ax.wilsonhandbook.online",
+  "category": "Developer Reference / Documentation / Open Standard",
+  "version": "1.0.0",
+  "license": "MIT",
+  "pricing": "Free",
+  "lang": ["en"],
+  "capabilities": [
+    {
+      "name": "read_chapter",
+      "description": "Read any chapter by stage number or slug",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "chapter": {
+            "type": "string",
+            "description": "Chapter number (00-08) or slug (e.g., 'discovery', 'auth-and-access')"
+          }
+        },
+        "required": ["chapter"]
+      },
+      "scope": "read"
+    },
+    {
+      "name": "search_checklist",
+      "description": "Search the readiness checklist for specific criteria by stage or keyword",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": ["discovery", "identity", "auth", "integration", "errors", "agent-native", "all"],
+            "description": "Which stage to evaluate"
+          },
+          "keyword": {
+            "type": "string",
+            "description": "Search term (e.g., 'llms.txt', 'OAuth', 'MCP')"
+          }
+        }
+      },
+      "scope": "read"
+    },
+    {
+      "name": "evaluate_readiness",
+      "description": "Get a structured checklist for evaluating a service's agent readiness",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": ["discovery", "identity", "auth", "integration", "errors", "agent-native", "all"],
+            "description": "Which stage to evaluate"
+          }
+        }
+      },
+      "scope": "read"
+    },
+    {
+      "name": "lookup_reference",
+      "description": "Find standards, specifications, or articles related to a topic",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "Topic to look up (e.g., 'MCP', 'OAuth', 'llms.txt', 'auth.md')"
+          }
+        },
+        "required": ["topic"]
+      },
+      "scope": "read"
+    },
+    {
+      "name": "get_anti_pattern",
+      "description": "Get details about a specific anti-pattern by name or number",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name_or_number": {
+            "type": "string",
+            "description": "Anti-pattern name or number 1-25 (e.g., 'browser-only-auth', '3')"
+          }
+        },
+        "required": ["name_or_number"]
+      },
+      "scope": "read"
+    }
+  ],
+  "stages": [
+    {
+      "number": 0,
+      "slug": "what-is-ax",
+      "title": "What is Agent Experience (AX)?",
+      "title_zh": "什么是智能体体验（AX）？",
+      "key_concepts": ["UX", "DX", "AX", "agent journey", "maturity model"]
+    },
+    {
+      "number": 1,
+      "slug": "discovery",
+      "title": "Discovery: Can Agents Find You?",
+      "title_zh": "可发现性：智能体能否找到你？",
+      "key_concepts": ["llms.txt", "robots.txt", "sitemap", "JSON-LD", "AEO", "A2A Agent Card"]
+    },
+    {
+      "number": 2,
+      "slug": "identity",
+      "title": "Identity: Do Agents Understand What You Do?",
+      "title_zh": "身份标识：智能体能否理解你的产品？",
+      "key_concepts": ["capability index", "metadata consistency", "boundaries", "agents.json", "pricing"]
+    },
+    {
+      "number": 3,
+      "slug": "auth-and-access",
+      "title": "Auth & Access: Can Agents Authenticate and Act?",
+      "title_zh": "认证与访问：智能体能否认证并执行操作？",
+      "key_concepts": ["OAuth", "PKCE", "auth.md", "x402", "scoped tokens", "progressive scoping"]
+    },
+    {
+      "number": 4,
+      "slug": "integration",
+      "title": "Integration: Is the Plumbing There?",
+      "title_zh": "集成：管道是否就绪？",
+      "key_concepts": ["MCP", "A2A", "REST", "streaming", "SDKs", "webhooks", "OpenAPI"]
+    },
+    {
+      "number": 5,
+      "slug": "errors-and-recovery",
+      "title": "Errors & Recovery: Can Agents Self-Heal?",
+      "title_zh": "错误与恢复：代理能否自愈？",
+      "key_concepts": ["typed errors", "retryable", "retry-after", "idempotency", "MCP errors"]
+    },
+    {
+      "number": 6,
+      "slug": "agent-native-architecture",
+      "title": "Agent-Native Architecture",
+      "title_zh": "智能体原生架构",
+      "key_concepts": ["shared action model", "agent UI parity", "governed execution", "AGENTS.md"]
+    },
+    {
+      "number": 7,
+      "slug": "end-user-experience",
+      "title": "End-User Experience: Can Humans Interact Through Agents?",
+      "title_zh": "终端用户体验：人类能否通过智能体交互？",
+      "key_concepts": ["handoff flows", "MCP Apps", "activity transparency", "resumable workflows"]
+    },
+    {
+      "number": 8,
+      "slug": "anti-patterns",
+      "title": "Anti-Patterns: 25 Things That Break Agent Experience",
+      "title_zh": "反模式：25个破坏智能体体验的常见错误",
+      "key_concepts": ["browser-only auth", "silent mutation", "kitchen sink endpoint", "something went wrong"]
+    },
+    {
+      "number": 9,
+      "slug": "checklist",
+      "title": "Agent Readiness Checklist",
+      "title_zh": "智能体就绪度检查清单",
+      "key_concepts": ["readiness assessment", "scoring", "practical steps"]
+    }
+  ],
+  "boundaries": {
+    "is": [
+      "A practical, actionable handbook for improving agent experience",
+      "A collection of patterns, anti-patterns, and best practices",
+      "A self-referencing example of good AX",
+      "An open community resource (MIT licensed)"
+    ],
+    "is_not": [
+      "A ranking or scoring service (that's ora.ai)",
+      "A formal specification (that's axd.md)",
+      "A news aggregator (that's agentexperience.ax)",
+      "A product with an API, auth system, or database",
+      "An MCP server or agent protocol implementation"
+    ]
+  },
+  "authentication": {
+    "type": "none",
+    "description": "All content is publicly accessible. No authentication required."
+  }
+}

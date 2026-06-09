@@ -1,0 +1,14 @@
+---
+const pathname = Astro.url.pathname;
+const isZh = pathname.startsWith('/zh');
+
+const normalize = (p: string) => p.replace(/\/+$/, '') || '/';
+
+const enPath = normalize(isZh ? pathname.replace(/^\/zh/, '') || '/' : pathname);
+const zhPath = normalize(isZh ? pathname : `/zh${pathname}`);
+---
+<span class="lang-switcher">
+  <a href={enPath} class:list={['lang-link', { active: !isZh }]}>EN</a>
+  <span class="sep">|</span>
+  <a href={zhPath} class:list={['lang-link', { active: isZh }]}>中文</a>
+</span>

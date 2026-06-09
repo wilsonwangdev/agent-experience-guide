@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LangSwitcher from '../../components/LangSwitcher.astro';
+import ModeToggle from '../../components/ModeToggle.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="智能体体验指南" description="一本让服务、应用和工具对 AI 智能体更友好的实用开源手册。" lang="zh">
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="/zh" class="logo">AX Guide</a>
+      <nav class="main-nav">
+        <a href="/zh/docs/00-what-is-ax">指南</a>
+        <a href="/zh/docs/08-checklist">检查清单</a>
+        <a href="/zh/docs/references">参考资料</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <LangSwitcher />
+      <ModeToggle />
+    </div>
+  </header>
+
+  <main class="landing" id="main-content">
+    <div class="lang-bar">
+      <a href="/">English</a> | <strong>中文</strong>
+    </div>
+    <h1>智能体体验指南</h1>
+    <p class="tagline">如何让你的服务、应用或工具对 AI 智能体更友好。</p>
+
+    <div class="agent-only agent-summary" style="margin: 2rem 0;">
+      <div class="agent-card">
+        <div class="agent-meta"><span class="agent-stage">AX</span></div>
+        <h2 class="agent-title" style="font-size:1.3rem;margin-bottom:1rem;">智能体体验指南</h2>
+        <div class="agent-field">
+          <span class="agent-label">核心概念</span>
+          <div class="agent-tags">
+            <span class="agent-tag">可发现性</span><span class="agent-tag">身份标识</span><span class="agent-tag">认证</span><span class="agent-tag">集成</span><span class="agent-tag">错误</span><span class="agent-tag">架构</span>
+          </div>
+        </div>
+        <div class="agent-field">
+          <span class="agent-label">操作</span>
+          <div class="agent-nav-links" style="flex-direction:column;gap:4px;">
+            <span>→ /zh/docs/00-what-is-ax — 什么是智能体体验</span>
+            <span>→ /zh/docs/08-checklist — 就绪度检查清单</span>
+            <span>→ /SUMMARY.md — 密集参考</span>
+            <span>→ /capabilities.json — 机器可解析索引</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="human-only">
+      <p>Web 是为人而建的——每个按钮、每个表单、每个导航菜单都默认用户是有眼睛和双手的人。但增长最快的用户群体不是人类，而是 AI 智能体。<strong>每个网站已经存在一种智能体体验，问题只在于它是好是坏。</strong></p>
+
+      <p>正如 UX 教我们为用户设计、DX 教我们为开发者设计，<strong>AX（智能体体验）</strong> 是为 AI 智能体设计的学科——它们浏览网站、调用 API、阅读文档、代表人类完成任务。本指南是一本实用的开源手册，教你如何做好这件事。</p>
+
+      <h2>为什么需要本指南</h2>
+      <ul>
+        <li><strong>ora.ai</strong> 告诉你<em>你在哪里</em>——它对数千个网站评分并排名智能体就绪度。</li>
+        <li><strong>axd.md</strong> 告诉你<em>目标是什么</em>——它定义了 12 条原则和 15 个原语。</li>
+        <li><strong>agentexperience.ax</strong> 策划<em>对话和文章</em>关于 AX 运动。</li>
+      </ul>
+      <p><strong>本指南</strong>告诉你<em>怎么到达</em>——具体的、可操作的步骤，附带代码示例、模式和反模式。</p>
+
+      <h2>六个阶段</h2>
+      <ol>
+        <li><a href="/zh/docs/01-discovery">可发现性</a> — 智能体能找到你吗？</li>
+        <li><a href="/zh/docs/02-identity">身份标识</a> — 智能体能理解你的产品吗？</li>
+        <li><a href="/zh/docs/03-auth-and-access">认证与访问</a> — 智能体能认证并执行操作吗？</li>
+        <li><a href="/zh/docs/04-integration">集成</a> — 管道就绪了吗？</li>
+        <li><a href="/zh/docs/05-errors-and-recovery">错误与恢复</a> — 智能体能自愈吗？</li>
+        <li><a href="/zh/docs/06b-end-user-experience">终端用户体验</a> — 人类能通过智能体交互吗？</li>
+      </ol>
+
+      <h2>快速开始</h2>
+      <ol>
+        <li><strong>添加 <code>/llms.txt</code></strong> 到网站根目录。</li>
+        <li><strong>返回类型化错误</strong>，从每个 API 端点返回带重试指引的错误。</li>
+        <li><strong>让智能体认证</strong>使用作用域 API 令牌，而非仅限浏览器的 OAuth。</li>
+      </ol>
+
+      <p style="margin-top:2rem;"><a href="/zh/docs/00-what-is-ax">→ 开始阅读</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Agent Experience Guide — MIT License</span>
+      <nav>
+        <a href="/llms.txt">llms.txt</a>
+        <a href="/AGENTS.md">AGENTS.md</a>
+        <a href="/auth.md">auth.md</a>
+        <a href="/capabilities.json">capabilities.json</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>

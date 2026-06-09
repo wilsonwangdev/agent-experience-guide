@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+
+const currentSlug = Astro.props.currentSlug || '';
+const lang = Astro.props.lang || 'en';
+
+const docs = await getCollection('docs', (entry) => {
+  if (lang === 'en') return entry.id.startsWith('en/');
+  return entry.id.startsWith('zh/');
+});
+
+function parseStage(s: number | string): number {
+  if (typeof s === 'number') return s;
+  const map: Record<string, number> = {
+    'architecture': 95, 'anti-patterns': 96, 'checklist': 97, 'reference': 98,
+  };
+  return map[s] ?? 99;
+}
+
+const chapters = docs
+  .filter(d => d.data.stage !== undefined)
+  .sort((a, b) => parseStage(a.data.stage) - parseStage(b.data.stage));
+---
+
+<nav class="sidebar human-only">
+  <div class="sidebar-title">{lang === 'zh' ? '目录' : 'Contents'}</div>
+  <ul class="sidebar-list">
+    {chapters.map((doc) => {
+      const slug = doc.id.replace(/^(en|zh)\//, '').replace(/\.md$/, '');
+      const prefix = lang === 'zh' ? '/zh/docs/' : '/docs/';
+      const href = prefix + slug;
+      const isActive = currentSlug === slug;
+      const title = lang === 'zh' ? (doc.data.zh_title || doc.data.title) : doc.data.title;
+      return (
+        <li>
+          <a href={href} class:list={['sidebar-link', { active: isActive }]}>
+            {title}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>
