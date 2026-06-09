@@ -1,6 +1,13 @@
 import { defineConfig } from 'astro/config';
+import mermaid from 'astro-mermaid';
 
 export default defineConfig({
+  integrations: [
+    mermaid({
+      theme: 'base',
+      autoTheme: true,
+    }),
+  ],
   site: 'https://ax.wilsonhandbook.online',
   srcDir: './src',
   publicDir: './public',

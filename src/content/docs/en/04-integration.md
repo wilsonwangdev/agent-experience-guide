@@ -22,16 +22,13 @@ The ora.ai data tells the story: **only 27% of sites have functional agent integ
 
 Agent integration has multiple layers. Each layer is independent but complementary:
 
-```
-┌─────────────────────────────────────────────┐
-│           Application Layer                  │  Your product's actual capabilities
-├─────────────────────────────────────────────┤
-│         Protocol Layer                       │  MCP, A2A, REST, GraphQL
-├─────────────────────────────────────────────┤
-│         Transport Layer                      │  HTTP, SSE, WebSocket, Streamable HTTP
-├─────────────────────────────────────────────┤
-│         Auth Layer                           │  OAuth, API keys, auth.md, x402
-└─────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A["Application Layer<br/>Your product's actual capabilities"]
+    B["Protocol Layer<br/>MCP, A2A, REST, GraphQL"]
+    C["Transport Layer<br/>HTTP, SSE, WebSocket, Streamable HTTP"]
+    D["Auth Layer<br/>OAuth, API keys, auth.md, x402"]
+    A --> B --> C --> D
 ```
 
 A well-integrated service nails all four. An agent-ready service at least has the protocol and transport layers right.

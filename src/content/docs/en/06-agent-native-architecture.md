@@ -36,26 +36,17 @@ If you can archive an email, create a dashboard, schedule a meeting, or render a
 
 This doesn't mean the agent uses the visual interface. It means both the visual interface and the agent interface call the same underlying action model.
 
-```
-┌──────────────────────────────────────┐
-│              Product                  │
-│                                       │
-│  ┌──────────┐    ┌────────────────┐  │
-│  │  Human   │    │     Agent      │  │
-│  │  UI      │    │  (MCP/API)     │  │
-│  └────┬─────┘    └───────┬────────┘  │
-│       │                  │           │
-│       └──────┬───────────┘           │
-│              │                       │
-│     ┌────────▼────────┐             │
-│     │  Shared Actions  │             │
-│     │  (single model)  │             │
-│     └────────┬────────┘             │
-│              │                       │
-│     ┌────────▼────────┐             │
-│     │   Database       │             │
-│     └─────────────────┘             │
-└──────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph Product["Product"]
+        Human["Human<br/>UI"]
+        Agent["Agent<br/>(MCP/API)"]
+        Shared["Shared Actions<br/>(single model)"]
+        DB[("Database")]
+    end
+    Human --> Shared
+    Agent --> Shared
+    Shared --> DB
 ```
 
 ### 2. One Shared Action Model
