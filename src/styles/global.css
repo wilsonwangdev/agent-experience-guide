@@ -22,10 +22,10 @@
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --focus-ring: 0 0 0 3px rgb(124 58 237 / 0.3);
-  --code-inline-text: #5b21b6;
-  --code-block-bg: #f6f8fa;
-  --code-block-text: #24292e;
-  --code-block-border: #d0d7de;
+  --code-inline-text: #7c3aed;
+  --code-block-bg: #161b22;
+  --code-block-text: #e6edf3;
+  --code-block-border: #30363d;
   --code-line-num: #8b949e;
 }
 
@@ -43,7 +43,7 @@
     --accent-soft: #2e1065;
     --focus-ring: 0 0 0 3px rgb(167 139 250 / 0.4);
     --code-inline-text: #c4b5fd;
-    --code-block-bg: #161b22;
+    --code-block-bg: #0d1117;
     --code-block-text: #e6edf3;
     --code-block-border: #30363d;
     --code-line-num: #8b949e;
@@ -263,7 +263,6 @@ html[data-mode="agent"] .mode-label-agent {
   display: flex;
   flex: 1;
   min-height: calc(100vh - var(--nav-h) - 60px);
-  content-visibility: auto;
 }
 
 .doc-main {
@@ -477,47 +476,6 @@ html[data-mode="agent"] .mode-label-agent {
   user-select: none;
 }
 
-/* ---- Dark mode code token overrides ---- */
-/* Shiki github-light token colors don't work on dark backgrounds.
-   Override all token colors in dark mode for readability. */
-@media (prefers-color-scheme: dark) {
-  .prose pre [style*="color:#24292E"],
-  .prose pre [style*="color:#24292e"] {
-    color: #e6edf3 !important;
-  }
-  .prose pre [style*="color:#005CC5"] {
-    color: #79c0ff !important;
-  }
-  .prose pre [style*="color:#032F62"],
-  .prose pre [style*="color:#032f62"] {
-    color: #a5d6ff !important;
-  }
-  .prose pre [style*="color:#22863A"],
-  .prose pre [style*="color:#22863a"] {
-    color: #7ee787 !important;
-  }
-  .prose pre [style*="color:#6F42C1"],
-  .prose pre [style*="color:#6f42c1"] {
-    color: #d2a8ff !important;
-  }
-  .prose pre [style*="color:#D73A49"],
-  .prose pre [style*="color:#d73a49"] {
-    color: #ff7b72 !important;
-  }
-  .prose pre [style*="color:#E36209"],
-  .prose pre [style*="color:#e36209"] {
-    color: #ffa657 !important;
-  }
-  .prose pre [style*="color:#6A737D"],
-  .prose pre [style*="color:#6a737d"] {
-    color: #8b949e !important;
-  }
-  .prose pre [style*="color:#B31D28"],
-  .prose pre [style*="color:#b31d28"] {
-    color: #ff7b72 !important;
-  }
-}
-
 /* ---- Tables ---- */
 .prose table {
   width: 100%;
@@ -682,6 +640,7 @@ html[data-mode="agent"] .mode-label-agent {
   max-width: var(--content-w);
   margin: 0 auto;
   padding: 4rem 2rem 5rem;
+  flex: 1;
 }
 
 .landing h1 {
